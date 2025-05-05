@@ -53,6 +53,8 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/ModuleDrivers/driver_i2c.c
     ${CMAKE_SOURCE_DIR}/ModuleDrivers/driver_oled.c
     ${CMAKE_SOURCE_DIR}/ModuleDrivers/ascii_font.c
+    ${CMAKE_SOURCE_DIR}/ModuleDrivers/driver_usart.c
+    ${CMAKE_SOURCE_DIR}/ModuleDrivers/ring_buffer.c
 )
 
 # Add include paths

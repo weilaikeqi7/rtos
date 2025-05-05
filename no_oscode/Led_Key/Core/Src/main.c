@@ -19,13 +19,18 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "gpio.h"
+#include "usart.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "driver_led.h"
-#include  "driver_key.h"
+#include <stdio.h>
+#include <string.h>
 #include "driver_i2c.h"
+#include  "driver_key.h"
+#include "driver_led.h"
 #include "driver_oled.h"
+#include "driver_usart.h"
+#include "ring_buffer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,7 +51,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+extern int __io_getchar(void) __attribute__((weak));
+ring_buffer test_buffer;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -66,9 +72,8 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
-
+  // char c = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -89,22 +94,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  //BuleOn();
-  BLUE_ON();
-  // 1. 重新初始化I2C的引脚
-  I2C_GPIO_ReInit();
-  // 2. 初始化OLED
-  OLED_Init();
-  // 3. 清屏
-  OLED_Clear();
-  // 4. 在第0列第0页打印一个字符'A'
-  OLED_PutChar(0, 0, 'A');
-  // 5. 在第16列第9页打印一个字符'Y'
-  OLED_PutChar(0, 16, 'Y');
-  // 6. 在第0列第2页打印一个字符串"Hello World!"
-  OLED_PrintString(2, 0, "Hello World!");
-
+  KEY_GPIO_ReInit();
+  ring_buffer_init(&test_buffer);
+  EnableDebugIRQ();
+  printf("hello World!\r\n");
+  //DebugPrint("Hello World!\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -112,12 +108,39 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    //BlueShine();
-    //BlueShine2();
-    if (K1_Value() == 0) {
-        BlueShine2();
-    }
+
     /* USER CODE BEGIN 3 */
+    // DebugGet((char *)buf, 4);
+    // DebugPrint((char *)buf);
+    // memset(buf, 0, 4);
+    // scanf("%s9", buf);
+    // printf("%s\n", buf);
+    // memset(buf, 0, strlen(buf));
+    // c = __io_getchar();
+    //
+    // if (c != 0) {
+    //   printf("%c\r\n", c);
+    //   c = 0;
+    // }
+    if(KEY1_Value() == KEY_PRESSED)
+    {
+      printf("Key 1 is pressed!\r\n");
+    }
+
+    if(KEY2_Value() == KEY_PRESSED)
+    {
+      printf("Key 2 is pressed!\r\n");
+    }
+
+    if(KEY3_Value() == KEY_PRESSED)
+    {
+      printf("Key 3 is pressed!\r\n");
+    }
+
+    if(KEY4_Value() == KEY_PRESSED)
+    {
+      printf("Key 4 is pressed!\r\n");
+    }
   }
   /* USER CODE END 3 */
 }
