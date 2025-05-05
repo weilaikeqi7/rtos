@@ -50,6 +50,9 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     ${CMAKE_SOURCE_DIR}/ModuleDrivers/driver_key.c
     ${CMAKE_SOURCE_DIR}/ModuleDrivers/driver_led.c
+    ${CMAKE_SOURCE_DIR}/ModuleDrivers/driver_i2c.c
+    ${CMAKE_SOURCE_DIR}/ModuleDrivers/driver_oled.c
+    ${CMAKE_SOURCE_DIR}/ModuleDrivers/ascii_font.c
 )
 
 # Add include paths

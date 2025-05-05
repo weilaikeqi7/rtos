@@ -23,6 +23,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "driver_led.h"
+#include  "driver_key.h"
+#include "driver_i2c.h"
+#include "driver_oled.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -89,6 +92,19 @@ int main(void)
   /* USER CODE BEGIN 2 */
   //BuleOn();
   BLUE_ON();
+  // 1. 重新初始化I2C的引脚
+  I2C_GPIO_ReInit();
+  // 2. 初始化OLED
+  OLED_Init();
+  // 3. 清屏
+  OLED_Clear();
+  // 4. 在第0列第0页打印一个字符'A'
+  OLED_PutChar(0, 0, 'A');
+  // 5. 在第16列第9页打印一个字符'Y'
+  OLED_PutChar(0, 16, 'Y');
+  // 6. 在第0列第2页打印一个字符串"Hello World!"
+  OLED_PrintString(2, 0, "Hello World!");
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -97,7 +113,10 @@ int main(void)
   {
     /* USER CODE END WHILE */
     //BlueShine();
-    BlueShine2();
+    //BlueShine2();
+    if (K1_Value() == 0) {
+        BlueShine2();
+    }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
